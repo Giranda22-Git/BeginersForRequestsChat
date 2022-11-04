@@ -1,0 +1,29 @@
+{
+  "name": "beginersforrequestschat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Giranda22-Git/BeginersForRequestsChat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Giranda22-Git/BeginersForRequestsChat/issues"
+  },
+  "homepage": "https://github.com/Giranda22-Git/BeginersForRequestsChat#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongoose": "^6.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
