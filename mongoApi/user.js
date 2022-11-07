@@ -26,7 +26,7 @@ const create = async function (userData) {
 
 const remove = async function (condition) {
   try {
-    const userRemoveLog = await mongoUser.delete(condition)
+    const userRemoveLog = await mongoUser.deleteMany(condition)
 
     return userRemoveLog
   }
@@ -37,7 +37,7 @@ const remove = async function (condition) {
 
 const update = async function (condition, update) {
   try {
-    const updateLog = await mongoUser.update(condition, update)
+    const updateLog = await mongoUser.updateMany(condition, update)
 
     return updateLog
   }
