@@ -50,7 +50,7 @@ async function init (settings) {
 		})
 
     // require and use express http endPoints
-    app.use('/users', require('./endPoints/users.js'))
+    app.use('/user', require('./endPoints/user.js'))
 	})
 
   // declare event on mongodb connection open
