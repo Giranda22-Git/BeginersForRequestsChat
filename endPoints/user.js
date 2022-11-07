@@ -107,6 +107,8 @@ router.post('/authorization', async (req, res) => {
 
 router.post('/registration', async (req, res) => {
   try {
+
+    console.log(req.body)
     const startTime = new Date()
 
     const targetUserData = await mongoUserApi.filter({ login: req.body?.userData?.login })
