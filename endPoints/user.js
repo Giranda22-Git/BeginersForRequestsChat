@@ -65,10 +65,59 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+router.post('/authorization', async (req, res) => {
+  try {
+    const startTime = new Date()
+
+    const targetUserData = await mongoUserApi.filter({
+      login: req.body?.userData?.login,
+      password: req.body?.userData?.password
+    })
+
+    const endTime = new Date()
+
+    return res.json({
+      info: {
+        status: 'OK',
+        headRequest: 'post /authorization/',
+        body: req.body,
+        count: targetUserData.length,
+        leadTime: `${endTime - startTime}ms`
+      },
+      payload: {
+        isAuth: Boolean(targetUserData.length),
+        userData: targetUserData
+      }
+    })
+  }
+  catch (error) {
+    console.log('post /authorization user endPoint Error: ', error)
+    return res.json({
+      info: {
+        status: 'Error',
+        headRequest: 'post /authorization/',
+        body: req.body,
+        count: 0,
+        leadTime: '0ms'
+      },
+      payload: error
+    })
+  }
+})
+
 router.post('/registration', async (req, res) => {
   try {
     const startTime = new Date()
+
+    const targetUserData = await mongoUserApi.filter({ login: req.body?.userData?.login })
+
+    if (!targetUserData) throw 'Пользователь с таким логином уже существует'
+    if (req.body?.userData?.login?.length < 6) throw 'Логин меньше 6 символов'
+    if (req.body?.userData?.password !== req.body?.userData?.tryPassword) throw 'Пароли не совпадают'
+    if (req.body?.userData?.password?.length < 6) throw 'Пароль меньше 6 символов'
+
     const createUserLog = await mongoUserApi.create(req.body?.userData)
+
     const endTime = new Date()
 
     return res.json({
