@@ -107,13 +107,12 @@ router.post('/authorization', async (req, res) => {
 
 router.post('/registration', async (req, res) => {
   try {
-
-    console.log(req)
     const startTime = new Date()
 
     const targetUserData = await mongoUserApi.filter({ login: req.body?.userData?.login })
 
     if (!targetUserData) throw 'Пользователь с таким логином уже существует'
+    if (!req.body?.userData?.password && !req.body?.userData?.tryPassword) throw 'Пароль пустой, а он обязателен!!!'
     if (req.body?.userData?.login?.length < 6) throw 'Логин меньше 6 символов'
     if (req.body?.userData?.password !== req.body?.userData?.tryPassword) throw 'Пароли не совпадают'
     if (req.body?.userData?.password?.length < 6) throw 'Пароль меньше 6 символов'
