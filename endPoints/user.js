@@ -69,6 +69,9 @@ router.post('/authorization', async (req, res) => {
   try {
     const startTime = new Date()
 
+    if (!req.body?.userData?.login) throw 'свойство login пустое'
+    if (!req.body?.userData?.password) throw 'свойство password пустое'
+
     const targetUserData = await mongoUserApi.filter({
       login: req.body?.userData?.login,
       password: req.body?.userData?.password
@@ -109,9 +112,9 @@ router.post('/registration', async (req, res) => {
   try {
     const startTime = new Date()
 
-    const targetUserData = await mongoUserApi.filter({ login: req.body?.userData?.login })
+    const targetUserData = (await mongoUserApi.filter({ login: req.body?.userData?.login }))[0]
 
-    if (!targetUserData) throw 'Пользователь с таким логином уже существует'
+    if (targetUserData) throw 'Пользователь с таким логином уже существует'
     if (!req.body?.userData?.password && !req.body?.userData?.tryPassword) throw 'Пароль пустой, а он обязателен!!!'
     if (req.body?.userData?.login?.length < 6) throw 'Логин меньше 6 символов'
     if (req.body?.userData?.password !== req.body?.userData?.tryPassword) throw 'Пароли не совпадают'
@@ -124,7 +127,7 @@ router.post('/registration', async (req, res) => {
     return res.json({
       info: {
         status: 'OK',
-        headRequest: 'post /create/',
+        headRequest: 'post /registration/',
         body: req.body,
         count: 1,
         leadTime: `${endTime - startTime}ms`
