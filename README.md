@@ -38,6 +38,19 @@ path: /user/
 
 ```
 
+### Get target User
+
+method: Get
+path: /user/${id}
+
+#### status 'OK' response payload model
+
+```javascript
+
+{userData}
+
+```
+
 ### Register new User
 
 method: POST
@@ -85,18 +98,28 @@ path: /user/registration
 
 ```
 
-### Authorization User
+### Update User
 
 method: POST
-path: /user/authorization
+path: /user/update
 
 #### body model:
 ```javascript
 
 {
-  userData: {
-    login: String, required
-    password: String, required
+  filter: { // по этому фильтру мы ищем конкретного пользователя/пользователей которых хотим изменить
+    id: String,
+    login: String,
+    password: String,
+    name: String,
+    age: Number
+    __v: Number
+  }
+  update: { // обьект содержащий в себе новые параметры пользователя которые мы хотим обновить
+    login: String,
+    password: String,
+    name: String,
+    age: Number
   }
 }
 
@@ -107,12 +130,37 @@ path: /user/authorization
 ```javascript
 
 {
-  login: String, required,
-  password: String, required,
-  name: String,
-  age: Number,
-  __v: Number,
-  _id: String
+  acknowledged: Boolean, required
+  modifiedCount: Number, required
+  upsertedId: Boolean, required
+  upsertedCount: Number, required
+  matchedCount: Number, required
+}
+
+```
+
+
+### Delete User
+
+method: POST
+path: /user/delete
+
+#### body model:
+```javascript
+
+{
+  id: String, required // id пользователя которого нужно удалить
+}
+
+```
+
+#### status 'OK' response payload model
+
+```javascript
+
+{
+  "acknowledged": Boolean, required
+	"deletedCount": Number, required
 }
 
 ```
