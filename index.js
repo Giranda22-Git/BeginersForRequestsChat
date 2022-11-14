@@ -51,6 +51,7 @@ async function init (settings) {
 
     // require and use express http endPoints
     app.use('/user', require('./endPoints/user.js'))
+    app.use('/chat', require('./endPoints/chat.js'))
 	})
 
   // declare event on mongodb connection open

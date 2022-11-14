@@ -98,6 +98,34 @@ path: /user/registration
 
 ```
 
+### Authorization User
+
+method: POST
+path: /user/authorization
+
+#### body model:
+```javascript
+{
+  userData: {
+    login: String, required
+    password: String, required
+  }
+}
+```
+
+#### status 'OK' response payload model
+
+```javascript
+{
+  login: String, required,
+  password: String, required,
+  name: String,
+  age: Number,
+  __v: Number,
+  _id: String
+}
+```
+
 ### Update User
 
 method: POST
@@ -139,7 +167,6 @@ path: /user/update
 
 ```
 
-
 ### Delete User
 
 method: POST
@@ -162,5 +189,130 @@ path: /user/delete
   "acknowledged": Boolean, required
 	"deletedCount": Number, required
 }
+
+```
+
+
+## Chats
+
+### Get all Chats
+
+method: GET
+path: /chat/
+
+#### status 'OK' response payload model
+
+```javascript
+
+[
+  {chatData},
+  {chatData},
+  {chatData}
+]
+
+```
+
+### Get target Chat
+
+method: GET
+path: /chat/${id}
+
+#### status 'OK' response payload model
+
+```javascript
+
+{chatData}
+
+```
+
+### Get target user chats
+
+method: GET
+path: /chat/user/:id
+
+#### status 'OK' response payload model
+
+```javascript
+[
+  {chatData},
+  {chatData},
+  {chatData}
+]
+```
+
+
+### Send text message to chat
+
+method: POST
+path: /chat/send/text
+
+#### body model:
+```javascript
+
+{
+  login: String, required // login пользователя который отправляет сообщение
+  text: String, required // текст самого сообщения
+  chatId: String, required // id чата в который отправляется сообщение
+}
+
+```
+
+#### status 'OK' response payload model
+
+```javascript
+acknowledged: Boolean, required
+modifiedCount: Number, required
+upsertedId: Boolean, required
+upsertedCount: Number, required
+matchedCount: Number, required
+```
+
+#### status 'Error' response payload model
+
+```javascript
+
+'Не пришел параметр login'
+'Не пришел параметр text'
+'Не пришел параметр chatId'
+'Пользователя с таким логином не существует'
+
+```
+
+
+### Create new Chat
+
+method: POST
+path: /chat/create
+
+#### body model:
+```javascript
+
+{
+  userId: String, required, // id пользователя который хочет создать новый чат
+  label: String, required, // название чата
+  members: [userId], required, // массив участников чата
+  description: String // описание чата, необязательный параметр!
+}
+
+```
+
+#### status 'OK' response payload model
+
+```javascript
+acknowledged: Boolean, required
+modifiedCount: Number, required
+upsertedId: Boolean, required
+upsertedCount: Number, required
+matchedCount: Number, required
+```
+
+#### status 'Error' response payload model
+
+```javascript
+
+'Не пришел параметр userId'
+'Не пришел параметр label'
+'Не правельный параметр members'
+'В чате должно быть хотя бы 2 участника'
 
 ```
