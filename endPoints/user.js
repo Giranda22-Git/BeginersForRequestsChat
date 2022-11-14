@@ -136,11 +136,11 @@ router.post('/registration', async (req, res) => {
     })
   }
   catch (error) {
-    console.log('post /create user endPoint Error: ', error)
+    console.log('post /registration user endPoint Error: ', error)
     return res.json({
       info: {
         status: 'Error',
-        headRequest: 'post /create/',
+        headRequest: 'post /registration/',
         body: req.body,
         count: 0,
         leadTime: `0ms`
