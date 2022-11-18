@@ -2,6 +2,7 @@ const router = require('express').Router()
 const mongoChatApi = require('../mongoApi/chat')
 const mongoUserApi = require('../mongoApi/user')
 const { v4: uuidv4 } = require('uuid')
+const mongoose = require('mongoose')
 
 router.get('/', async (req, res) => {
   try {
@@ -80,7 +81,7 @@ router.get('/user/:id', async (req, res) => {
 
     const startTime = new Date()
 
-    const targetUser = await mongoUserApi.filter({ _id: req.params.id })[0]
+    const targetUser = await mongoUserApi.filter({ _id: mongoose.Schema.Types.ObjectId(req.params.id) })[0]
 
     console.log({targetUser})
 
