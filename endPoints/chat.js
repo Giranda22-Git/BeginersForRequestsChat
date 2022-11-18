@@ -75,19 +75,13 @@ router.get('/:id', async (req, res) => {
 })
 
 
-router.get('/user/:id', async (req, res) => {
+router.get('/user/:login', async (req, res) => {
   try {
     if (!req.params?.id) throw 'Не пришел параметр id'
 
     const startTime = new Date()
 
-    const targetUser = await mongoUserApi.filter({ _id: mongoose.Schema.Types.ObjectId(req.params.id) })[0]
-
-    console.log({targetUser})
-
-    if (!targetUser) throw 'Такого пользователя не существует'
-
-    const targetChats = await mongoChatApi.filter({ members: targetUser.login })
+    const targetChats = await mongoChatApi.filter({ members: req.params.login })
 
     const endTime = new Date()
 
