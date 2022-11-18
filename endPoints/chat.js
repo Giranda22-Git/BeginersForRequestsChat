@@ -167,7 +167,7 @@ router.post('/create', async (req, res) => {
     const chatData = {
       owner: req.body.userId,
       label: req.body.label,
-      description: req.body.description | '',
+      description: req.body.description,
       members: req.body.members,
       history: [{
         text: 'Системное сообщение, чат успешно создан',
