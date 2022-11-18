@@ -77,7 +77,7 @@ router.get('/:id', async (req, res) => {
 
 router.get('/user/:login', async (req, res) => {
   try {
-    if (!req.params?.id) throw 'Не пришел параметр id'
+    if (!req.params?.login) throw 'Не пришел параметр login'
 
     const startTime = new Date()
 
