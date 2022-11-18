@@ -22,12 +22,9 @@ const chat = new mongoose.Schema({
     required: true
   },
   members: {
-    type: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'users'
-    }],
+    type: [String],
     required: true
-  } ,
+  },
   history: [{
     text: String,
     timestamp: Date,

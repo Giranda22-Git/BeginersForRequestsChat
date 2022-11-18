@@ -80,7 +80,11 @@ router.get('/user/:id', async (req, res) => {
 
     const startTime = new Date()
 
-    const targetChats = await mongoChatApi.filter({ members: req.params.id })
+    const targetUser = await mongoUserApi.filter({ _id: req.params.id })[0]
+
+    if (!targetUser) throw 'Такого пользователя не существует'
+
+    const targetChats = await mongoChatApi.filter({ members: targetUser.login })
 
     const endTime = new Date()
 
