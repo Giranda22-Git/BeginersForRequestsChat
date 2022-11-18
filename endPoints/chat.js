@@ -82,6 +82,8 @@ router.get('/user/:id', async (req, res) => {
 
     const targetUser = await mongoUserApi.filter({ _id: req.params.id })[0]
 
+    console.log({targetUser})
+
     if (!targetUser) throw 'Такого пользователя не существует'
 
     const targetChats = await mongoChatApi.filter({ members: targetUser.login })
