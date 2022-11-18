@@ -157,8 +157,10 @@ router.post('/create', async (req, res) => {
     if (!req.body?.userId) throw 'Не пришел параметр userId'
     if (!req.body?.label) throw 'Не пришел параметр label'
     if (!Array.isArray(req.body?.members)) throw 'Не правельный параметр members'
-    if (!req.body.members.length < 2) throw 'В чате должно быть хотя бы 2 участника'
 
+    req.body.members.push(req.body.userId)
+
+    if (req.body.members.length < 2) throw 'В чате должно быть хотя бы 2 участника'
 
     const startTime = new Date()
 
