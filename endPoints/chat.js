@@ -2,6 +2,7 @@ const router = require('express').Router()
 const mongoChatApi = require('../mongoApi/chat')
 const mongoUserApi = require('../mongoApi/user')
 const { v4: uuidv4 } = require('uuid')
+const mongoUser = require('../models/user')
 const mongoose = require('mongoose')
 
 router.get('/', async (req, res) => {
@@ -159,7 +160,11 @@ router.post('/create', async (req, res) => {
     if (!req.body?.label) throw 'Не пришел параметр label'
     if (!Array.isArray(req.body?.members)) throw 'Не правельный параметр members'
 
-    req.body.members.push(req.body.userId)
+    const targetUser = await mongoUser.findOne({ _id: req.body.userId }).lean().exec()
+
+    if (!targetUser) throw 'Такого пользователя не существует'
+
+    req.body.members.push(targetUser.login)
 
     if (req.body.members.length < 2) throw 'В чате должно быть хотя бы 2 участника'
 
