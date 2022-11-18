@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
         count: findedChats.length,
         leadTime: `${endTime - startTime}ms`
       },
-      payload: findedUsers
+      payload: findedChats
     })
   }
   catch (error) {
