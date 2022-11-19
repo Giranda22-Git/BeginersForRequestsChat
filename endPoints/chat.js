@@ -122,7 +122,7 @@ router.post('/send/text', async (req, res) => {
 
     console.log({login: req.body.login})
 
-    const targetUser = await mongoUserApi.filter({ login: req.body.login })[0]
+    const targetUser = (await mongoUserApi.filter({ login: req.body.login }))[0]
 
     if (!targetUser) throw 'Пользователя с таким логином не существует'
 
