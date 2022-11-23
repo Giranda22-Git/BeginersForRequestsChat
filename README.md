@@ -228,7 +228,7 @@ path: /chat/${id}
 ### Get target user chats
 
 method: GET
-path: /chat/user/:id
+path: /chat/user/:userLogin
 
 #### status 'OK' response payload model
 
@@ -290,7 +290,7 @@ path: /chat/create
 {
   userId: String, required, // id пользователя который хочет создать новый чат
   label: String, required, // название чата
-  members: [userId], required, // массив участников чата
+  members: [login], required, // массив участников чата
   description: String // описание чата, необязательный параметр!
 }
 
