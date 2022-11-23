@@ -1,6 +1,18 @@
 const router = require('express').Router()
 const mongoUserApi = require('../mongoApi/user')
 
+router.get('/delete/all', async (req, res) => {
+  try {
+    const result = await mongoUserApi.remove({})
+
+    return res.json(result)
+  }
+  catch (error) {
+    console.log('post /delete/all user endPoint Error')
+    return res.json(error)
+  }
+})
+
 router.get('/', async (req, res) => {
   try {
     const startTime = new Date()

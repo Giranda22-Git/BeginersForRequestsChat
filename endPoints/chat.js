@@ -5,6 +5,18 @@ const { v4: uuidv4 } = require('uuid')
 const mongoUser = require('../models/user')
 const mongoose = require('mongoose')
 
+router.post('/delete/all', async (req, res) => {
+  try {
+    const result = await mongoChatApi.remove({})
+
+    return res.json(result)
+  }
+  catch (error) {
+    console.log('post /delete/all chat endPoint Error: ', error)
+    return res.json(error)
+  }
+})
+
 router.get('/', async (req, res) => {
   try {
     const startTime = new Date()
