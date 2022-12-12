@@ -25,7 +25,7 @@ const updateLabel = async (id, label) => {
 }
 
 const remove = async (id) => {
-  const removeLog = await mongoTask.deleteOne({ _id, id })
+  const removeLog = await mongoTask.deleteOne({ _id: id })
 
   return removeLog
 }
