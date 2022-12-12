@@ -53,6 +53,7 @@ async function init (settings) {
     app.use('/user', require('./endPoints/user.js'))
     app.use('/chat', require('./endPoints/chat.js'))
     app.use('/docs', require('./endPoints/docs.js'))
+    app.use('/task', require('./endPoints/task.js'))
 	})
 
   // declare event on mongodb connection open
