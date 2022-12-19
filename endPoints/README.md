@@ -1,6 +1,6 @@
 # Documentation for TodoList api
 
-server api: 195.49.210.34
+server ip: 195.49.210.34
 
 ## create Task
 ### path: /task/create
