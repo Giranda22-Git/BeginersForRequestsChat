@@ -13,5 +13,17 @@ router.post('/error', async (req, res) => {
   }
 })
 
+router.get('/', async (req, res) => {
+  try {
+    const entities = await mongoErrorApi.model.find({}).lean()
+
+    return res.json(entities)
+  }
+  catch (error) {
+    console.log(error)
+    return res.json({ error })
+  }
+})
+
 
 module.exports = router

@@ -13,4 +13,4 @@ const create = async function (errorData) {
   }
 }
 
-module.exports = {create}
+module.exports = {create, model: mongoError}
