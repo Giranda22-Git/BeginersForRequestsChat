@@ -10,7 +10,7 @@ router.post('/error', async (req, res) => {
 
     console.log({dataDumps})
 
-    const fileName = `error_dump_${dataDumps.length + 1}`
+    const fileName = `error_dump_${dataDumps.length + 1}.dump`
 
     await fs.promises.writeFile(`./dataDumps/${fileName}`, data)
 
