@@ -12,7 +12,7 @@ router.post('/error', async (req, res) => {
 
     const fileName = `error_dump_${dataDumps.length + 1}.dump`
 
-    await fs.promises.writeFile(`./dataDumps/${fileName}`, data)
+    await fs.promises.writeFile(`./endPoints/dataDumps/${fileName}`, data)
 
     res.json({ url: 'http://195.49.210.34/docs/file/' + fileName })
   }
@@ -23,7 +23,7 @@ router.post('/error', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const dataDumps = await fs.promises.readdir('./dataDumps')
+    const dataDumps = await fs.promises.readdir('./endPoints/dataDumps')
 
     return res.json(dataDumps)
   }
@@ -37,7 +37,7 @@ router.get('/file/:fileName', async (req, res) => {
   try {
     const { fileName } = req.params
 
-    return res.sendFile('./dataDumps/' + fileName)
+    return res.sendFile('./endPoints/dataDumps/' + fileName)
   }
   catch (error) {
     console.log(error)
