@@ -38,7 +38,9 @@ router.get('/file/:fileName', async (req, res) => {
   try {
     const { fileName } = req.params
 
-    return res.sendFile('./endPoints/dataDumps/' + fileName)
+    const dumpContent = Buffer.from(await fs.promises.readFile('./endPoints/dataDumps/' + fileName)).toString('utf-8')
+
+    return res.json({ dumpContent })
   }
   catch (error) {
     console.log(error)
