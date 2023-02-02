@@ -4,13 +4,13 @@ const fs = require('fs')
 
 router.post('/error', async (req, res) => {
   try {
-    const { data } = req.body
+    const { data, subfix } = req.body
 
     const dataDumps = await fs.promises.readdir('./endPoints/dataDumps')
 
     console.log({dataDumps})
 
-    const fileName = `error_dump_${dataDumps.length + 1}.dump`
+    const fileName = `error_dump_${subfix}_${dataDumps.length + 1}.dump`
 
     await fs.promises.writeFile(`./endPoints/dataDumps/${fileName}`, data)
 
