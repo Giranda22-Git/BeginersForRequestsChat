@@ -1,12 +1,20 @@
 const router = require('express').Router()
-const mongoErrorApi = require('../mongoApi/error')
+const fs = require('fs')
 
 
 router.post('/error', async (req, res) => {
   try {
-    const createLog = await mongoErrorApi.create(req.body)
+    const { data } = req.body
 
-    res.json(createLog)
+    const dataDumps = await fs.promises.readdir('./dataDumps')
+
+    console.log({dataDumps})
+
+    const fileName = `error_dump_${dataDumps.length + 1}`
+
+    await fs.promises.writeFile(`./dataDumps/${fileName}`, data)
+
+    res.json({ url: 'http://195.49.210.34/docs/file/' + fileName })
   }
   catch (error) {
     console.log(error)
@@ -15,9 +23,21 @@ router.post('/error', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const entities = await mongoErrorApi.model.find({}).lean()
+    const dataDumps = await fs.promises.readdir('./dataDumps')
 
-    return res.json(entities)
+    return res.json(dataDumps)
+  }
+  catch (error) {
+    console.log(error)
+    return res.json({ error })
+  }
+})
+
+router.get('/file/:fileName', async (req, res) => {
+  try {
+    const { fileName } = req.params
+
+    return res.sendFile('./dataDumps/' + fileName)
   }
   catch (error) {
     console.log(error)
