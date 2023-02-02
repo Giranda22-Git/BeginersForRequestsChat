@@ -13,9 +13,8 @@ const settings = require('./staticData/settings.js')
 const app = express()
 
 // standart express middleweare settings
-app.use(bodyParser.json({ limit: 52428800 * 10 }))
-app.use(bodyParser({ limit: 52428800 * 10 }))
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json({ limit: '100mb' }))
+app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }))
 app.use((req, res, next) => {
 	res.contentType('application/json')
 	next()
