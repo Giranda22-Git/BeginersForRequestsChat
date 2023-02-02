@@ -6,7 +6,7 @@ router.post('/error', async (req, res) => {
   try {
     const { data } = req.body
 
-    const dataDumps = await fs.promises.readdir('./endPoints')
+    const dataDumps = await fs.promises.readdir('./endPoints/dataDumps')
 
     console.log({dataDumps})
 
