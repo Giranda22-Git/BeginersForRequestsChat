@@ -2,7 +2,7 @@ const url = require('url')
 const {WebSocketServer} = require('ws')
 
 const wsGlobal = new WebSocketServer({
-  port: 2000
+  port: 2222
 })
 
 wsGlobal.on('connection', async function (ws, req) {
