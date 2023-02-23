@@ -4,6 +4,7 @@ const mongoUserApi = require('../mongoApi/user')
 const { v4: uuidv4 } = require('uuid')
 const mongoUser = require('../models/user')
 const mongoose = require('mongoose')
+const broadcast = require('../webSocket/broadcast')
 
 router.post('/delete/all', async (req, res) => {
   try {

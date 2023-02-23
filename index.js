@@ -49,6 +49,8 @@ async function init (settings) {
 			else console.log(`server started on \nPORT: ${settings.PORT}\nURL: ${settings.serverUrl}`)
 		})
 
+    const ws = require('./webSocket/connect')
+
     // require and use express http endPoints
     app.use('/user', require('./endPoints/user.js'))
     app.use('/chat', require('./endPoints/chat.js'))
