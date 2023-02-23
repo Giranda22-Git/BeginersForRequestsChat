@@ -136,7 +136,7 @@ router.post('/send/text', async (req, res) => {
     console.log({login: req.body.login})
 
     const targetUser = (await mongoUserApi.filter({ login: req.body.login }))[0]
-    const targetChat = await mongoChatApi.filter({ _id: req.body.chatId })
+    const targetChat = (await mongoChatApi.filter({ _id: req.body.chatId }))[0]
 
     if (!targetUser) throw 'Пользователя с таким логином не существует'
     if (!targetChat) throw 'Чата с таким chatId не существует'
