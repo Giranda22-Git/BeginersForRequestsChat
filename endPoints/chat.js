@@ -142,7 +142,7 @@ router.post('/send/text', async (req, res) => {
     if (!targetChat) throw 'Чата с таким chatId не существует'
 
     const updateLog = await mongoChatApi.addMessage(req.body.chatId, req.body.login, req.body.text)
-
+    console.log({targetChat})
     const membersWithOutSender = targetChat.members.filter(member => {
       return member !== req.body.login
     })
