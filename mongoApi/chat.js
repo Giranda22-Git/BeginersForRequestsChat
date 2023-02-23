@@ -101,7 +101,7 @@ const addMessage = async function (chatId, login, text) {
       { $push: { history: message } }
     )
 
-    return updateLog
+    return message
   }
   catch (error) {
     console.log('addMessage chat mongoApi Error: ', error)

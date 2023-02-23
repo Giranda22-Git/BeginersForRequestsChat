@@ -136,10 +136,23 @@ router.post('/send/text', async (req, res) => {
     console.log({login: req.body.login})
 
     const targetUser = (await mongoUserApi.filter({ login: req.body.login }))[0]
+    const targetChat = await mongoChatApi.filter({ _id: req.body.chatId })
 
     if (!targetUser) throw 'Пользователя с таким логином не существует'
+    if (!targetChat) throw 'Чата с таким chatId не существует'
 
     const updateLog = await mongoChatApi.addMessage(req.body.chatId, req.body.login, req.body.text)
+
+    const membersWithOutSender = targetChat.members.filter(member => {
+      return member !== req.body.login
+    })
+
+    console.log({membersWithOutSender})
+
+    broadcast(membersWithOutSender, JSON.stringify({
+      type: 'newMessage',
+      payload: {...updateLog, chatId: req.body.chatId}
+    }))
 
     const endTime = new Date()
 
@@ -201,6 +214,13 @@ router.post('/create', async (req, res) => {
     const createLog = await mongoChatApi.create(chatData)
 
     const endTime = new Date()
+
+    broadcast(req.body.members, JSON.stringify(
+      {
+        type: 'newChat',
+        payload: createLog
+      }
+    ))
 
     return res.json({
       info: {

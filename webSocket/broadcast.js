@@ -1,11 +1,17 @@
-const ws = require('./connection')
-
-const broadcast = async function (message) {
+const broadcast = async function (to, message) {
   try {
-    const clients = ws.clients
-
-    for (const client of clients) {
-      client.send(message)
+    const clients = wsGlobal.clients
+    if (to?.length) {
+      for (const client of clients) {
+        if (to.includes(client.login)) {
+          client.send(message)
+        }
+      }
+    }
+    else {
+      for (const client of clients) {
+        client.send(message)
+      }
     }
   }
   catch (err) {
