@@ -27,12 +27,12 @@ router.post('/remove', async (req, res) => {
 
     const endTime = new Date()
 
-    if (!id) return res.json({
+    if (!id) throw res.json({
       info: {
-        status: 'Error',
+        status: 'OK',
         headRequest: 'post /remove',
         body: req.body,
-        count: 0,
+        count: 1,
         leadTime: `${endTime - startTime}ms`
       },
       payload: removeLog
@@ -40,7 +40,53 @@ router.post('/remove', async (req, res) => {
   }
   catch (error) {
     console.log('post /remove chat endPoint Error: ', error)
-    return res.json(error)
+    if (!id) throw res.json({
+      info: {
+        status: 'Error',
+        headRequest: 'post /remove',
+        body: req.body,
+        count: 0,
+        leadTime: `0ms`
+      },
+      payload: error
+    })
+  }
+})
+
+router.post('/expel/user', async (req, res) => {
+  try {
+    const startTime = new Date()
+    const { chatId, userId } = req.body
+
+    if (!chatId || !userId) throw 'Не передан chatId или userId'
+
+    const updateLog = await mongoChatApi.expelMembers(chatId, userId)
+
+    const endTime = new Date()
+
+    return res.json({
+      info: {
+        status: 'OK',
+        headRequest: 'post /expel/user',
+        body: req.body,
+        count: findedChats.length,
+        leadTime: `${endTime - startTime}ms`
+      },
+      payload: updateLog
+    })
+  }
+  catch (error) {
+    console.log('post /expel/user chat endPoint Error: ', error)
+    return res.json({
+      info: {
+        status: 'Error',
+        headRequest: 'post /expel/user',
+        body: req.body,
+        count: 0,
+        leadTime: `0ms`
+      },
+      payload: error
+    })
   }
 })
 
