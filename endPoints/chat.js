@@ -18,6 +18,32 @@ router.post('/delete/all', async (req, res) => {
   }
 })
 
+router.post('/remove', async (req, res) => {
+  try {
+    const startTime = new Date()
+    const { id } = req.body
+
+    const removeLog = await mongoChatApi.remove({ _id: id })
+
+    const endTime = new Date()
+
+    if (!id) return res.json({
+      info: {
+        status: 'Error',
+        headRequest: 'post /remove',
+        body: req.body,
+        count: 0,
+        leadTime: `${endTime - startTime}ms`
+      },
+      payload: removeLog
+    })
+  }
+  catch (error) {
+    console.log('post /remove chat endPoint Error: ', error)
+    return res.json(error)
+  }
+})
+
 router.get('/', async (req, res) => {
   try {
     const startTime = new Date()
